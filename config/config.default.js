@@ -34,5 +34,9 @@ module.exports = appInfo => {
     encrypt: true,
     renew: true, //  延长会话有效期
   };
+  exports.mongoose = {
+    url: 'mongodb://127.0.0.1/miproject',
+    options: {},
+  };
   return config;
 };
