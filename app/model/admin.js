@@ -8,6 +8,7 @@ module.exports = app => {
     username: { type: String },
     password: { type: String },
     mobile: { type: Number },
+    email: { type: String },
     status: { type: Number, default: 1 },
     role_id: { type: Schema.Types.ObjectId },
     add_time: { type: Number, default: date },
