@@ -32,6 +32,8 @@ class AccessController extends BaseController {
   async toAdd() {
     console.log('toAdd:', this.ctx.request.body);
     const { module_id } = this.ctx.request.body;
+    this.ctx.request.body.description = this.ctx.request.body.description.trim();
+    console.log('toAdd1:', this.ctx.request.body);
     if (module_id !== '0') {
       this.ctx.request.body.module_id = this.app.mongoose.Types.ObjectId(module_id);
     }
@@ -48,6 +50,7 @@ class AccessController extends BaseController {
   async toEdit() {
     console.log('toEdit:', this.ctx.request.body);
     const { module_id, id } = this.ctx.request.body;
+    this.ctx.request.body.description = this.ctx.request.body.description.trim();
     if (module_id !== '0') {
       this.ctx.request.body.module_id = this.app.mongoose.Types.ObjectId(module_id);
     }

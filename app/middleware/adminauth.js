@@ -8,7 +8,7 @@ module.exports = options => {
     const pathname = url.parse(ctx.request.url).pathname;
     console.log('url:', pathname);
     if (ctx.session.userinfo) {
-      ctx.state.userinfo = ctx.userinfo;
+      ctx.state.userinfo = ctx.session.userinfo;
       await next();
     } else {
       if (pathname === '/admin/verify' || pathname === '/admin/login' || pathname === '/admin/dologin') {
