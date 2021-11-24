@@ -10,6 +10,7 @@ module.exports = app => {
 
   router.get('/admin/verify', controller.admin.base.code);
   router.get('/admin/delete', controller.admin.base.delete);
+  router.get('/admin/changestatus', controller.admin.base.changeStatus);
   // 登陆
   router.get('/admin/login', controller.admin.login.index);
   router.post('/admin/dologin', controller.admin.login.doLogin);

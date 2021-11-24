@@ -29,6 +29,23 @@ class BaseController extends Controller {
     await this.ctx.model[model].deleteOne({ _id: id });
     await this.success(this.ctx.state.prevPage, '删除成功');
   }
+  async changeStatus() {
+    console.log('changeStatus', this.ctx.request.query);
+    const { attr, id, model } = this.ctx.request.query;
+    const result = await this.ctx.model[model].find({ _id: id });
+    if (result.length > 0) {
+      const json = {};
+      if (result[0][attr] === 1) {
+        json[attr] = 0;
+      } else {
+        json[attr] = 1;
+      }
+      await this.ctx.model[model].updateOne({ _id: id }, json);
+      this.ctx.body = { message: '更新成功', success: true };
+    } else {
+      this.ctx.body = { message: '更新失败,参数错误', success: false };
+    }
+  }
 }
 
 module.exports = BaseController;

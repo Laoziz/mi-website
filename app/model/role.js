@@ -6,6 +6,7 @@ module.exports = app => {
   const date = new Date().getTime();
   const RoleSchema = new Schema({
     title: { type: String },
+    status: { type: Number, default: 1 },
     description: { type: String },
     add_time: { type: Number, default: date },
   });
