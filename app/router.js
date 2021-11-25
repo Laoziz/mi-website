@@ -8,9 +8,13 @@ module.exports = app => {
   router.get('/', controller.home.index);
   // const adminauth = app.middleware.adminauth;
 
+  router.get('/admin', controller.admin.main.index);
+  router.get('/admin/welcome', controller.admin.main.welcome);
+
   router.get('/admin/verify', controller.admin.base.code);
   router.get('/admin/delete', controller.admin.base.delete);
-  router.get('/admin/changestatus', controller.admin.base.changeStatus);
+  router.get('/admin/changeStatus', controller.admin.base.changeStatus);
+  router.get('/admin/editNum', controller.admin.base.editNum);
   // 登陆
   router.get('/admin/login', controller.admin.login.index);
   router.post('/admin/dologin', controller.admin.login.doLogin);
@@ -37,4 +41,11 @@ module.exports = app => {
   router.get('/admin/access/edit', controller.admin.access.edit);
   router.post('/admin/access/toAdd', controller.admin.access.toAdd);
   router.post('/admin/access/toEdit', controller.admin.access.toEdit);
+
+  //轮播图管理
+  router.get('/admin/focus', controller.admin.focus.index);
+  router.get('/admin/focus/add', controller.admin.focus.add);
+  router.get('/admin/focus/edit', controller.admin.focus.edit);
+  router.post('/admin/focus/toAdd', controller.admin.focus.toAdd);
+  router.post('/admin/focus/toEdit', controller.admin.focus.toEdit);
 };

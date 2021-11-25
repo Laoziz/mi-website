@@ -27,7 +27,7 @@ class LoginController extends BaseController {
     } else {
       await this.error('/admin/login', '验证码不对');
     }
-    await this.ctx.redirect('/admin/manager');
+    await this.ctx.redirect('/admin');
   }
 
   async loginOut() {

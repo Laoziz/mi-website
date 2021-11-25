@@ -20,7 +20,7 @@ class RoleController extends BaseController {
   async toAdd() {
     console.log('toAdd:', this.ctx.request.body);
     const { title } = this.ctx.request.body;
-    const description = this.ctx.request.body.description.trim();
+    const description = this.ctx.request.body.description;
     const role = new this.ctx.model.Role({ title, description });
     await role.save();
     await this.success('/admin/role', '增加角色成功');

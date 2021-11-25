@@ -1,13 +1,16 @@
-<ul class="aside">   		
+<ul class="aside" >   		
   <%for(let i=0;i<module_list.length;i++){%>
     <%if(module_list[i].checked){%>
       <li>
-        <h4><%=module_list[i].module_name%></h4>
+        <h4>
+          <%=module_list[i].module_name%>
+          <span class="nav_open"></span>
+        </h4>
         <ul>
           <%for(let j=0;j<module_list[i].items.length;j++){%>
             <%if(module_list[i].items[j].checked){%>
               <li  class="list-group-item"> 
-                <a href="<%=module_list[i].items[j].url%>"> 
+                <a href="<%=module_list[i].items[j].url%>" target="rightMain"> 
                   <%=module_list[i].items[j].action_name%>
                 </a>
               </li>
