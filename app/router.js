@@ -42,10 +42,17 @@ module.exports = app => {
   router.post('/admin/access/toAdd', controller.admin.access.toAdd);
   router.post('/admin/access/toEdit', controller.admin.access.toEdit);
 
-  //轮播图管理
+  // 轮播图管理
   router.get('/admin/focus', controller.admin.focus.index);
   router.get('/admin/focus/add', controller.admin.focus.add);
   router.get('/admin/focus/edit', controller.admin.focus.edit);
   router.post('/admin/focus/toAdd', controller.admin.focus.toAdd);
   router.post('/admin/focus/toEdit', controller.admin.focus.toEdit);
+
+  // 商品管理
+  router.get('/admin/goodsType', controller.admin.goodsType.index);
+  router.get('/admin/goodsType/add', controller.admin.goodsType.add);
+  router.get('/admin/goodsType/edit', controller.admin.goodsType.edit);
+  router.post('/admin/goodsType/toAdd', controller.admin.goodsType.toAdd);
+  router.post('/admin/goodsType/toEdit', controller.admin.goodsType.toEdit);
 };
