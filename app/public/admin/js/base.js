@@ -4,7 +4,6 @@ $(function(){
 var app = {
 	init:function(){
 		this.toggleAside();
-		this.resizeIframe();
 	},
 	toggleAside:function(){
 		$('.aside h4').click(function(){
@@ -26,10 +25,6 @@ var app = {
 				}
 			}
 		})
-	},
-	resizeIframe:function(){
-		var heights = document.documentElement.clientHeight-100;
-		document.getElementById('rightMain').height = heights
 	},
 	editNum(el, model, attr, id) {
 		var val=$(el).text();
@@ -54,7 +49,3 @@ var app = {
 		})
 	}
 }
-
-$(window).resize(function(){
-	app.resizeIframe();
-})
