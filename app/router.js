@@ -62,4 +62,11 @@ module.exports = app => {
   router.get('/admin/goodsTypeAttribute/edit', controller.admin.goodsTypeAttribute.edit);
   router.post('/admin/goodsTypeAttribute/toAdd', controller.admin.goodsTypeAttribute.toAdd);
   router.post('/admin/goodsTypeAttribute/toEdit', controller.admin.goodsTypeAttribute.toEdit);
+
+  // 商品分类
+  router.get('/admin/goodsCate', controller.admin.goodsCate.index);
+  router.get('/admin/goodsCate/add', controller.admin.goodsCate.add);
+  router.get('/admin/goodsCate/edit', controller.admin.goodsCate.edit);
+  router.post('/admin/goodsCate/toAdd', controller.admin.goodsCate.toAdd);
+  router.post('/admin/goodsCate/toEdit', controller.admin.goodsCate.toEdit);
 };

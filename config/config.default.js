@@ -39,5 +39,9 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/miproject',
     options: {},
   };
+  // 配置表单数量
+  exports.multipart = {
+    fields: '50',
+  };
   return config;
 };

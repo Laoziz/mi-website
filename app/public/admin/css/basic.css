@@ -78,7 +78,13 @@ ul{
     border-bottom-left-radius: 0px;
 }
 
+.form_input span{
+	display: inline-block;
 
+	width: 100px;
+	text-align: right;
+
+}
 
 .aside .list-group-item a{
 	
