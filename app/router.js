@@ -49,7 +49,7 @@ module.exports = app => {
   router.post('/admin/focus/toAdd', controller.admin.focus.toAdd);
   router.post('/admin/focus/toEdit', controller.admin.focus.toEdit);
 
-  // 商品管理
+  // 商品类型管理
   router.get('/admin/goodsType', controller.admin.goodsType.index);
   router.get('/admin/goodsType/add', controller.admin.goodsType.add);
   router.get('/admin/goodsType/edit', controller.admin.goodsType.edit);
@@ -69,4 +69,12 @@ module.exports = app => {
   router.get('/admin/goodsCate/edit', controller.admin.goodsCate.edit);
   router.post('/admin/goodsCate/toAdd', controller.admin.goodsCate.toAdd);
   router.post('/admin/goodsCate/toEdit', controller.admin.goodsCate.toEdit);
+
+  // 商品管理
+  router.get('/admin/goods', controller.admin.goods.index);
+  router.get('/admin/goods/add', controller.admin.goods.add);
+  router.get('/admin/goods/edit', controller.admin.goods.edit);
+  router.post('/admin/goods/toAdd', controller.admin.goods.toAdd);
+  router.post('/admin/goods/toEdit', controller.admin.goods.toEdit);
+  router.get('/admin/goods/goodsTypeAttribute', controller.admin.goods.goodsTypeAttribute);
 };
