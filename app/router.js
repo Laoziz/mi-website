@@ -77,4 +77,6 @@ module.exports = app => {
   router.post('/admin/goods/toAdd', controller.admin.goods.toAdd);
   router.post('/admin/goods/toEdit', controller.admin.goods.toEdit);
   router.get('/admin/goods/goodsTypeAttribute', controller.admin.goods.goodsTypeAttribute);
+  router.post('/admin/goods/goodsUploadImage', controller.admin.goods.goodsUploadImage);
+  router.post('/admin/goods/goodsUploadPhoto', controller.admin.goods.goodsUploadPhoto);
 };

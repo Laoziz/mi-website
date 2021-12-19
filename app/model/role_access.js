@@ -1,5 +1,5 @@
 'use strict';
-
+// 角色权限联系表
 module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;

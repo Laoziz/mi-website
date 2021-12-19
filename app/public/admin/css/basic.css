@@ -117,9 +117,11 @@ table .th{
 
 input[type=file]{
  	display: inline !important;
-
 }
 
+.pic{
+	max-width: 100px;
+}
 
 .col-sm-2,.col-sm-10{
 	padding-left: 0px;
@@ -157,4 +159,25 @@ input[type=file]{
 	position: relative;
 	left:50px;
 	bottom: 20px;
+}
+.photoLib{
+
+	width: 120px;
+	margin: 40px auto 20px auto;
+}
+
+.photoLib div:nth-child(2){width:100%!important;height:100%!important;} 
+
+.goods_image_list {
+	border: 1px solid #eee;
+}
+.goods_image_list li {
+	width: 120px;   
+	float: left;    
+	margin-right: 10px;
+	border-bottom: none;
+}
+
+.goods_image_list li .color_list {
+	margin-top:20px;
 }

@@ -1,5 +1,5 @@
 'use strict';
-
+// 管理员
 module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;

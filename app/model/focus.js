@@ -1,4 +1,5 @@
 'use strict';
+// 轮播图
 module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;

@@ -1,4 +1,5 @@
 'use strict';
+// 商品类型
 module.exports = app => {
   const mongoose = app.mongoose;
   const Schema = mongoose.Schema;
