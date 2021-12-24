@@ -158,13 +158,14 @@
                     <li>
                       <img class="pic" src="<%=goodsImage[i].img_url%>" />
                       <div class="color_list">
-                        <select name="color_id" id="color_id">
+                        <select class="relation_goods_color" goods_image_id="<%=goodsImage[i]._id%>" >
                           <option value="0">关联颜色</option>
-                          <option value="1">白色</option>
-                          <option value="2">黑色</option>
-                          <option value="3">黄色</option>
+                          <%for(var j=0;j<goodsColor.length;j++){%>
+                            <option value="<%=goodsColor[j]._id%>" <%if(goodsImage[i].color_id&&goodsImage[i].color_id.toString()==goodsColor[j]._id.toString()){%>selected<%}%> ><%=goodsColor[j].color_name%></option>
+                          <%}%>
                         </select>                                                        
                       </div>
+                      <div class="goods_image_delete" goods_image_id="<%=goodsImage[i]._id%>"></div>
                     </li>
                   <%}%>
                 </ul>
@@ -249,6 +250,33 @@
         }
       });
     })
+
+    $(function(){
+      // 改变颜色
+      $('.relation_goods_color').change(function(){
+        var color_id=$(this).val();
+        var goods_image_id=$(this).attr('goods_image_id');
+        console.log(color_id,goods_image_id);
+        $.post('/admin/goods/changeGoodsImageColor?_csrf=<%=csrf%>',{color_id:color_id,goods_image_id:goods_image_id},function(response){
+          if(response.success){
+            alert(response.message);
+          } else {
+            alert(response.message);
+          }
+        });
+      });
+      $('.goods_image_delete').click(function(){
+        var _that=this;
+        var flag=confirm('您确定要删除吗');
+        var goods_image_id=$(this).attr('goods_image_id');
+        $.post('/admin/goods/goodsImageRemove?_csrf=<%=csrf%>',{goods_image_id:goods_image_id},function(response){
+          console.log(response);
+          if(response.success){
+            $(_that).parent().remove();
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>

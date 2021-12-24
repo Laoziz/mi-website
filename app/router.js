@@ -79,4 +79,27 @@ module.exports = app => {
   router.get('/admin/goods/goodsTypeAttribute', controller.admin.goods.goodsTypeAttribute);
   router.post('/admin/goods/goodsUploadImage', controller.admin.goods.goodsUploadImage);
   router.post('/admin/goods/goodsUploadPhoto', controller.admin.goods.goodsUploadPhoto);
+  router.post('/admin/goods/changeGoodsImageColor', controller.admin.goods.changeGoodsImageColor);
+  router.post('/admin/goods/goodsImageRemove', controller.admin.goods.goodsImageRemove);
+
+  // 导航管理
+  router.get('/admin/nav', controller.admin.nav.index);
+  router.get('/admin/nav/add', controller.admin.nav.add);
+  router.get('/admin/nav/edit', controller.admin.nav.edit);
+  router.post('/admin/nav/toAdd', controller.admin.nav.toAdd);
+  router.post('/admin/nav/toEdit', controller.admin.nav.toEdit);
+
+  // 文章管理
+  router.get('/admin/article', controller.admin.article.index);
+  router.get('/admin/article/add', controller.admin.article.add);
+  router.get('/admin/article/edit', controller.admin.article.edit);
+  router.post('/admin/article/toAdd', controller.admin.article.toAdd);
+  router.post('/admin/article/toEdit', controller.admin.article.toEdit);
+
+  // 文章分类模块
+  router.get('/admin/articleCate', controller.admin.articleCate.index);
+  router.get('/admin/articleCate/add', controller.admin.articleCate.add);
+  router.get('/admin/articleCate/edit', controller.admin.articleCate.edit);
+  router.post('/admin/articleCate/toEdit', controller.admin.articleCate.toEdit);
+  router.post('/admin/articleCate/toAdd', controller.admin.articleCate.toAdd);
 };

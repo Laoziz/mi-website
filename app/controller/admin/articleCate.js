@@ -2,12 +2,12 @@
 const BaseController = require('./base.js');
 const fs = require('fs');
 const pump = require('mz-modules/pump');
-class GoodsCateController extends BaseController {
+class ArticleCateController extends BaseController {
   async index() {
-    const result = await this.ctx.model.GoodsCate.aggregate([
+    const result = await this.ctx.model.ArticleCate.aggregate([
       {
         $lookup: {
-          from: 'goods_cate',
+          from: 'article_cate',
           localField: '_id',
           foreignField: 'pid',
           as: 'items',
@@ -17,20 +17,20 @@ class GoodsCateController extends BaseController {
         $match: { pid: '0' },
       },
     ]);
-    await this.ctx.render('admin/goodsCate/index', { list: result });
+    await this.ctx.render('admin/articleCate/index', { list: result });
   }
   async add() {
-    const result = await this.ctx.model.GoodsCate.find({ pid: '0' });
-    await this.ctx.render('admin/goodsCate/add', {
+    const result = await this.ctx.model.ArticleCate.find({ pid: '0' });
+    await this.ctx.render('admin/articleCate/add', {
       cateList: result,
     });
   }
   async edit() {
     const id = this.ctx.request.query.id;
-    const list = await this.ctx.model.GoodsCate.find({ pid: '0' });
-    const result = await this.ctx.model.GoodsCate.find({ _id: id });
-    await this.ctx.render('admin/goodsCate/edit', {
-      goods_cate: result[0],
+    const list = await this.ctx.model.ArticleCate.find({ pid: '0' });
+    const result = await this.ctx.model.ArticleCate.find({ _id: id });
+    await this.ctx.render('admin/articleCate/edit', {
+      article_cate: result[0],
       list,
     });
   }
@@ -62,10 +62,10 @@ class GoodsCateController extends BaseController {
     const updateResult = Object.assign(files, parts.field);
     updateResult.description = updateResult.description.trim();
     console.log('add:', updateResult);
-    const goodsCate = new this.ctx.model.GoodsCate(updateResult);
-    await goodsCate.save();
+    const articleCate = new this.ctx.model.ArticleCate(updateResult);
+    await articleCate.save();
 
-    await this.success('/admin/goodsCate', '增加分类成功');
+    await this.success('/admin/articleCate', '增加分类成功');
   }
   async toEdit() {
     const parts = this.ctx.multipart({ autoFields: true });
@@ -96,15 +96,14 @@ class GoodsCateController extends BaseController {
       parts.field.pid = this.app.mongoose.Types.ObjectId(parts.field.pid);
       // 调用mongoose里面的方法把字符串转换成ObjectId
     }
-    
     const id = parts.field.id;
     const updateResult = Object.assign(files, parts.field);
     updateResult.description = updateResult.description.trim();
     console.log('toEdit:', updateResult);
-    await this.ctx.model.GoodsCate.updateOne({ _id: id }, updateResult);
+    await this.ctx.model.ArticleCate.updateOne({ _id: id }, updateResult);
 
-    await this.success('/admin/goodsCate', '增加分类成功');
+    await this.success('/admin/articleCate', '增加分类成功');
   }
 }
 
-module.exports = GoodsCateController;
+module.exports = ArticleCateController;

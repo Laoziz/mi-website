@@ -15,6 +15,7 @@ class LoginController extends BaseController {
     }
     const passWord = await this.ctx.service.tools.md5(password);
     // 检测验证码
+    console.log('code:', this.ctx.session.code);
     if (this.ctx.session.code.toUpperCase() === code.toUpperCase()) {
       const result = await this.ctx.model.Admin.find({ username, password: passWord });
       if (result.length > 0) {
@@ -33,6 +34,7 @@ class LoginController extends BaseController {
   async loginOut() {
     console.log('loginOut');
     this.ctx.session.userinfo = null;
+    this.ctx.session.code = null;
     this.ctx.redirect('/admin/login');
   }
 }

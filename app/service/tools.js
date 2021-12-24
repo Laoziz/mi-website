@@ -18,6 +18,7 @@ class ToolsService extends Service {
       background: '#cc9966',
     });
     this.ctx.session.code = captcha.text; /** 验证码上的信息 */
+    // 设置code的过期时间
     console.log('code:', captcha.text);
     return captcha;
   }

@@ -3,11 +3,18 @@
 const BaseController = require('./base');
 const fs = require('fs');
 const pump = require('mz-modules/pump');
-const { isString } = require('util');
 class GoodsController extends BaseController {
   async index() {
-    const goodsResult = await this.ctx.model.Goods.find({});
-    await this.ctx.render('admin/goods/index', { list: goodsResult });
+    const page = this.ctx.request.query.page || 1;
+    console.log('page:', this.ctx.request.query);
+    const pageSize = 3;
+    const totalNum = await this.ctx.model.Goods.find({}).count();
+    const goodsResult = await this.ctx.model.Goods.find({}).skip((page - 1) * pageSize).limit(pageSize);
+    await this.ctx.render('admin/goods/index', {
+      list: goodsResult,
+      totalPages: Math.ceil(totalNum / pageSize),
+      page,
+    });
   }
   async add() {
     const colorResult = await this.ctx.model.GoodsColor.find({});
@@ -88,6 +95,14 @@ class GoodsController extends BaseController {
       }
     });
     const goodsImageResult = await this.ctx.model.GoodsImage.find({ goods_id: goodsResult[0]._id });
+    console.log('goodsImageResult', goodsImageResult);
+    const colorTempArr = goodsResult[0].goods_color.split(',');
+
+    const goodsColorArr = [];
+    colorTempArr.forEach(item => {
+      goodsColorArr.push({ _id: item });
+    });
+    const goodsColorResult = await this.ctx.model.GoodsColor.find({ $or: goodsColorArr });
 
     await this.ctx.render('admin/goods/edit', {
       colorResult,
@@ -97,6 +112,7 @@ class GoodsController extends BaseController {
       color: colorResult,
       goodsAttr: goodsAttrStr,
       goodsImage: goodsImageResult,
+      goodsColor: goodsColorResult,
     });
   }
   async toAdd() {
@@ -124,7 +140,7 @@ class GoodsController extends BaseController {
     }
     const fieldGoods = Object.assign(files, parts.field);
     console.log('toAdd:', fieldGoods);
-    fieldGoods.goods_color = JSON.stringify(fieldGoods.goods_color);
+    fieldGoods.goods_color = fieldGoods.goods_color.toString();
     const goods = new this.ctx.model.Goods(fieldGoods);
     const goodsResult = await goods.save();
     console.log('add goods result:', goodsResult);
@@ -197,8 +213,9 @@ class GoodsController extends BaseController {
     const fieldGoods = Object.assign(files, parts.field);
     const id = fieldGoods.id;
     console.log('toEdit:', fieldGoods);
-    fieldGoods.goods_color = JSON.stringify(fieldGoods.goods_color);
-    await this.ctx.model.Goods.updateOne({ _id: id }, { fieldGoods });
+    fieldGoods.goods_color = fieldGoods.goods_color.toString();
+    const result = await this.ctx.model.Goods.updateOne({ _id: id }, fieldGoods);
+    console.log('result', result);
     // 图片的地址转化成 {link: 'path/to/image.jpg'}
     let goods_image_list = fieldGoods.goods_image_list;
     console.log('goods_image_list:', goods_image_list);
@@ -310,6 +327,32 @@ class GoodsController extends BaseController {
     // 图片的地址转化成 {link: 'path/to/image.jpg'}
 
     this.ctx.body = { link: files.file };
+  }
+  // 图片颜色更新
+  async changeGoodsImageColor() {
+    let { color_id, goods_image_id } = this.ctx.request.body;
+    console.log('changeGoodsImageColor:', this.ctx.request.body);
+    if (color_id) {
+      color_id = this.app.mongoose.Types.ObjectId(color_id);
+    }
+    const result = await this.ctx.model.GoodsImage.updateOne({ _id: goods_image_id }, {
+      color_id,
+    });
+    if (result) {
+      this.ctx.body = { success: 'true', message: '更新数据成功' };
+    } else {
+      this.ctx.body = { success: 'false', message: '更新数据失败' };
+    }
+  }
+  // 图片删除
+  async goodsImageRemove() {
+    const { goods_image_id } = this.ctx.request.body;
+    const result = await this.ctx.model.GoodsImage.deleteOne({ _id: goods_image_id });
+    if (result) {
+      this.ctx.body = { success: true, message: '删除数据成功' };
+    } else {
+      this.ctx.body = { success: false, message: '删除数据失败' };
+    }
   }
 }
 
