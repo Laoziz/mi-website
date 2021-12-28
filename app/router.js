@@ -49,6 +49,10 @@ module.exports = app => {
   router.post('/admin/focus/toAdd', controller.admin.focus.toAdd);
   router.post('/admin/focus/toEdit', controller.admin.focus.toEdit);
 
+  // 商店管理
+  router.get('/admin/setting', controller.admin.setting.index);
+  router.post('/admin/setting/toEdit', controller.admin.setting.toEdit);
+
   // 商品类型管理
   router.get('/admin/goodsType', controller.admin.goodsType.index);
   router.get('/admin/goodsType/add', controller.admin.goodsType.add);

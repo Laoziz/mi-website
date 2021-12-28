@@ -20,6 +20,7 @@
       <div class="table-responsive input-form">
         <form action="/admin/goods/toEdit?_csrf=<%=csrf%>" method="post" class="goods_content" enctype="multipart/form-data">
           <!-- Nav tabs -->
+          <input type="hidden" name="prevPage" value="<%=prevPage%>" />
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#general"  role="tab" data-toggle="tab">通用信息</a></li>
             <li role="presentation"><a href="#detail" role="tab" data-toggle="tab">详细描述</a></li>

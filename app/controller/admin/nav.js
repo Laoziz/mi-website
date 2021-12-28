@@ -22,6 +22,7 @@ class NavController extends BaseController {
     const result = await this.ctx.model.Nav.find({ _id: id });
     await this.ctx.render('admin/nav/edit', {
       list: result[0],
+      prevPage: this.ctx.state.prevPage,
     });
   }
   async toAdd() {
@@ -30,9 +31,9 @@ class NavController extends BaseController {
     await this.success('/admin/nav', '增加导航成功');
   }
   async toEdit() {
-    const { id } = this.ctx.request.body;
+    const { id, prevPage } = this.ctx.request.body;
     await this.ctx.model.Nav.updateOne({ _id: id }, this.ctx.request.body);
-    await this.success('/admin/nav', '编辑导航成功');
+    await this.success(prevPage || '/admin/nav', '编辑导航成功');
   }
 }
 

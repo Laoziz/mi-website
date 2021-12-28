@@ -6,14 +6,20 @@ const pump = require('mz-modules/pump');
 class GoodsController extends BaseController {
   async index() {
     const page = this.ctx.request.query.page || 1;
+    const keyword = this.ctx.request.query.keyword;
+    let json = {};
+    if (keyword) {
+      json = Object.assign({ title: { $regex: new RegExp(keyword) } });
+    }
     console.log('page:', this.ctx.request.query);
     const pageSize = 3;
-    const totalNum = await this.ctx.model.Goods.find({}).count();
-    const goodsResult = await this.ctx.model.Goods.find({}).skip((page - 1) * pageSize).limit(pageSize);
+    const totalNum = await this.ctx.model.Goods.find(json).count();
+    const goodsResult = await this.ctx.model.Goods.find(json).skip((page - 1) * pageSize).limit(pageSize);
     await this.ctx.render('admin/goods/index', {
       list: goodsResult,
       totalPages: Math.ceil(totalNum / pageSize),
       page,
+      keyword,
     });
   }
   async add() {
@@ -96,23 +102,25 @@ class GoodsController extends BaseController {
     });
     const goodsImageResult = await this.ctx.model.GoodsImage.find({ goods_id: goodsResult[0]._id });
     console.log('goodsImageResult', goodsImageResult);
-    const colorTempArr = goodsResult[0].goods_color.split(',');
+    let colorTempArr = [];
+    if (goodsResult[0].goods_color) {
+      colorTempArr = goodsResult[0].goods_color.split(',');
+    }
 
     const goodsColorArr = [];
     colorTempArr.forEach(item => {
       goodsColorArr.push({ _id: item });
     });
-    const goodsColorResult = await this.ctx.model.GoodsColor.find({ $or: goodsColorArr });
-
+    const goodsColorResult = goodsColorArr.length > 0 ? await this.ctx.model.GoodsColor.find({ $or: goodsColorArr }) : [];
     await this.ctx.render('admin/goods/edit', {
       colorResult,
       goodsType,
       goodsCate,
       goods: goodsResult[0],
-      color: colorResult,
       goodsAttr: goodsAttrStr,
       goodsImage: goodsImageResult,
       goodsColor: goodsColorResult,
+      prevPage: this.ctx.state.prevPage,
     });
   }
   async toAdd() {
@@ -140,7 +148,7 @@ class GoodsController extends BaseController {
     }
     const fieldGoods = Object.assign(files, parts.field);
     console.log('toAdd:', fieldGoods);
-    fieldGoods.goods_color = fieldGoods.goods_color.toString();
+    fieldGoods.goods_color = fieldGoods.goods_color ? fieldGoods.goods_color.toString() : '';
     const goods = new this.ctx.model.Goods(fieldGoods);
     const goodsResult = await goods.save();
     console.log('add goods result:', goodsResult);
@@ -211,7 +219,7 @@ class GoodsController extends BaseController {
       });
     }
     const fieldGoods = Object.assign(files, parts.field);
-    const id = fieldGoods.id;
+    const { id, prevPage } = fieldGoods;
     console.log('toEdit:', fieldGoods);
     fieldGoods.goods_color = fieldGoods.goods_color.toString();
     const result = await this.ctx.model.Goods.updateOne({ _id: id }, fieldGoods);
@@ -257,7 +265,7 @@ class GoodsController extends BaseController {
         console.log('result attr', result);
       }
     }
-    await this.success('/admin/goods', '修改商品数据成功');
+    await this.success(prevPage || '/admin/goods', '修改商品数据成功');
   }
   // 获取商品类型的属性 api接口
   async goodsTypeAttribute() {
