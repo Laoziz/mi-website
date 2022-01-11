@@ -96,7 +96,7 @@ class GoodsCateController extends BaseController {
       parts.field.pid = this.app.mongoose.Types.ObjectId(parts.field.pid);
       // 调用mongoose里面的方法把字符串转换成ObjectId
     }
-    
+
     const id = parts.field.id;
     const updateResult = Object.assign(files, parts.field);
     updateResult.description = updateResult.description.trim();

@@ -107,8 +107,15 @@ ul{
 
 
 table .th{
-	
 	background: #EEEEEE;
+}
+
+table .th th {
+	white-space: nowrap;
+}
+
+table td {
+	word-break: break-all;
 }
 
  .input-form li{
