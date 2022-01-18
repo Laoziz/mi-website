@@ -45,16 +45,19 @@ class ToolsService extends Service {
     };
   }
   async jimpImg(target) {
+    console.log('jimpImg:', target);
     // 上传图片成功以后生成缩略图
     Jimp.read(target, (err, lenna) => {
       if (err) throw err;
-      lenna.resize(200, 200) // resize
-        .quality(90) // set JPEG quality
-        .write(target + '_200x200' + path.extname(target));// save
-
-      lenna.resize(400, 400) // resize
-        .quality(90) // set JPEG quality
-        .write(target + '_400x400' + path.extname(target)); // save
+      for (let i = 0; i < this.config.jimpSize.length; i++) {
+        console.log('jimpImg w:', this.config.jimpSize[i]);
+        const { width, height } = this.config.jimpSize[i];
+        const pathDir = target + '_' + width + 'x' + height + path.extname(target);
+        console.log('dir:', pathDir);
+        lenna.resize(width, height) // resize
+          .quality(90) // set JPEG quality
+          .write(pathDir);// save
+      }
     });
   }
 }

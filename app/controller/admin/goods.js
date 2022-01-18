@@ -145,6 +145,8 @@ class GoodsController extends BaseController {
       files = Object.assign(files, {
         [fieldname]: dir.saveDir,
       });
+
+      this.service.tools.jimpImg(target);
     }
     const fieldGoods = Object.assign(files, parts.field);
     console.log('toAdd:', fieldGoods);
@@ -217,6 +219,7 @@ class GoodsController extends BaseController {
       files = Object.assign(files, {
         [fieldname]: dir.saveDir,
       });
+      this.service.tools.jimpImg(target);
     }
     const fieldGoods = Object.assign(files, parts.field);
     const { id, prevPage } = fieldGoods;
@@ -299,6 +302,7 @@ class GoodsController extends BaseController {
       files = Object.assign(files, {
         [fieldname]: dir.saveDir,
       });
+      this.service.tools.jimpImg(target);
     }
     console.log(files);
     // 图片的地址转化成 {link: 'path/to/image.jpg'}

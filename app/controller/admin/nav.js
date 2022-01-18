@@ -8,6 +8,7 @@ class NavController extends BaseController {
     const pageSize = 5;
     const totalNum = await this.ctx.model.Nav.find({}).count();
     const Result = await this.ctx.model.Nav.find({}).skip((page - 1) * pageSize).limit(pageSize);
+    console.log('result:', Result);
     await this.ctx.render('/admin/nav/index', {
       list: Result,
       totalPages: Math.ceil(totalNum / pageSize),
@@ -26,11 +27,13 @@ class NavController extends BaseController {
     });
   }
   async toAdd() {
+    console.log('toAdd:', this.ctx.request.body);
     const nav = new this.ctx.model.Nav(this.ctx.request.body);
     await nav.save(); // 注意
     await this.success('/admin/nav', '增加导航成功');
   }
   async toEdit() {
+    console.log('toEdit:', this.ctx.request.body);
     const { id, prevPage } = this.ctx.request.body;
     await this.ctx.model.Nav.updateOne({ _id: id }, this.ctx.request.body);
     await this.success(prevPage || '/admin/nav', '编辑导航成功');

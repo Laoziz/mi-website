@@ -39,6 +39,15 @@ module.exports = appInfo => {
     url: 'mongodb://127.0.0.1/miproject',
     options: {},
   };
+
+  exports.redis = {
+    client: {
+      port: 6379, // Redis port
+      host: '127.0.0.1', // Redis host
+      password: '',
+      db: 0,
+    },
+  };
   // 配置表单数量
   exports.multipart = {
     fields: '50',
@@ -55,5 +64,16 @@ module.exports = appInfo => {
       },
     },
   };
+
+  // 定义缩略图尺寸
+  exports.jimpSize = [
+    {
+      width: 180,
+      height: 180,
+    }, {
+      width: 400,
+      height: 400,
+    },
+  ];
   return config;
 };
